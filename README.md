@@ -10,4 +10,4 @@ We find this especially useful when we need to remind AI to stay on task.
 
 ---
 
-![Alt Text](https://uoavox.studio/site_image/softwaredl/CodeAssist.png)
+![Alt Text](https://uoavox.studio/site_image/softwaredl/CodeAssist.png?version=2)
