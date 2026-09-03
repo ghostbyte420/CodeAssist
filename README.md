@@ -1,9 +1,7 @@
 ## CodeAssist </br>
-
 ```A Hub For AI-Powered Assistants to Help Our Development Team Brainstorm```</br>
 
 ---
-
 This software brings all of the AI Chat Bots we have used in the past into one browser application, so that we don't have to keep typing in URLs 
 and entering our credentials every time we need to brainstorm with AI. 
 
