@@ -5,7 +5,7 @@ This software brings all of the AI Chat Bots we have used in the past into one b
 and entering our credentials every time we need to brainstorm with AI. 
 
 Included is an optional *Prompt Selection* menu that users can edit if they want to add, modify, and/ or delete custom prompts they use frequently.
-We find this especially useful when we need to remind AI to stay on task and follow our instructions.
+We find this especially useful when we need to remind AI to stay on task.
 
 ---
 
