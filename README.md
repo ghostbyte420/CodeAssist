@@ -1,6 +1,6 @@
 ## CodeAssist </br>
 
-*A Hub For AI-Powered Assistants to Help Our Development Team Brainstorm*</br>
+```A Hub For AI-Powered Assistants to Help Our Development Team Brainstorm```</br>
 
 ---
 
