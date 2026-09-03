@@ -1,0 +1,77 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net10.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWindowsForms>true</UseWindowsForms>
+		<UseWPF>true</UseWPF>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<ApplicationIcon>Resources\logo\logo_001.ico</ApplicationIcon>
+		<RootNamespace>CodeAssist</RootNamespace>
+
+		<!-- Single-file publish settings -->
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<PublishSingleFile>true</PublishSingleFile>
+		<SelfContained>false</SelfContained>
+		<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+		<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+		<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+
+		<!-- Publish output location -->
+		<PublishDir>bin\Publish\</PublishDir>
+
+		<!-- Suppress binding redirect warnings for WebView2 WPF -->
+		<NoWarn>$(NoWarn);MSB3277</NoWarn>
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Content Include="Resources\logo\logo_001.ico" />
+	</ItemGroup>
+
+	<!--
+	  This is a WinForms app and does not use the WPF WebView2 wrapper.
+	  The Microsoft.Web.WebView2 package pulls in Microsoft.Web.WebView2.Wpf.dll
+	  from its lib_manual folder via NuGet asset resolution. That assembly was
+	  built against WindowsBase 4.0.0.0, which conflicts with .NET 10's
+	  WindowsBase 5.0.0.0 (MSB3277) and shows a yellow-triangle warning under
+	  the Solution Explorer "Assemblies" node.
+
+	  We strip it from every item list that the build AND Visual Studio's
+	  design-time dependency graph consume, right after NuGet resolves the
+	  package assets.
+	-->
+	<Target Name="RemoveUnusedWebView2Wpf" AfterTargets="ResolvePackageAssets;ResolveAssemblyReferences">
+		<ItemGroup>
+			<ResolvedCompileFileDefinitions Remove="@(ResolvedCompileFileDefinitions)" Condition="'%(Filename)' == 'Microsoft.Web.WebView2.Wpf'" />
+			<RuntimeCopyLocalItems Remove="@(RuntimeCopyLocalItems)" Condition="'%(Filename)' == 'Microsoft.Web.WebView2.Wpf'" />
+			<ReferenceCopyLocalItems Remove="@(ReferenceCopyLocalItems)" Condition="'%(Filename)' == 'Microsoft.Web.WebView2.Wpf'" />
+			<Reference Remove="@(Reference)" Condition="'%(Reference.Filename)' == 'Microsoft.Web.WebView2.Wpf'" />
+			<ReferencePath Remove="@(ReferencePath)" Condition="'%(ReferencePath.Filename)' == 'Microsoft.Web.WebView2.Wpf'" />
+		</ItemGroup>
+	</Target>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4191.47">
+			<ExcludeAssets>runtimepack.json</ExcludeAssets>
+		</PackageReference>
+		<PackageReference Include="Scintilla5.NET" Version="7.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+
+</Project>
